@@ -28,7 +28,6 @@ public class CrowdInfo {
 
     public void setDatetime(Timestamp datetime) { this.datetime = datetime; }
 
-    @SuppressWarnings("unchecked")
     public Map<String, Object> serialize() {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(this, Map.class);
