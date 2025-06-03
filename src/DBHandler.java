@@ -35,7 +35,6 @@ public final class DBHandler {
         FileInputStream serviceAccount =
             new FileInputStream("ss_config.json");
 
-        @SuppressWarnings("deprecation")
         FirebaseOptions options = new FirebaseOptions.Builder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
             .build();
@@ -111,11 +110,6 @@ public final class DBHandler {
             resultList.add(dataMap);
         }
         return resultList;
-    }
-
-    // TESTING METHOD
-    public void getCrowdInfoByLocation(String loc) throws InterruptedException, ExecutionException {
-        List<Map<String,Object>> info = getR5CrowdInfoByLocationFromDB(loc);   
     }
 
     public String uploadPost(String username, String content, boolean image) throws InterruptedException, ExecutionException {
