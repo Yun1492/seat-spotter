@@ -33,7 +33,7 @@ public final class DBHandler {
     public DBHandler() throws IOException, InterruptedException, ExecutionException {
 
         FileInputStream serviceAccount =
-            new FileInputStream("/Users/yun/Downloads/ss_config.json");
+            new FileInputStream("ss_config.json");
 
         @SuppressWarnings("deprecation")
         FirebaseOptions options = new FirebaseOptions.Builder()
@@ -48,17 +48,6 @@ public final class DBHandler {
         System.out.println();
 
         testing();
-    }
-
-    public void testing() throws InterruptedException, ExecutionException {
-
-        //Testing 
-        //Only append to Library ONLY
-        //uploadCrowdInfoByLocation(LIBRARY,3);
-
-        //getCrowdInfoByLocation(LIBRARY);
-        //getR5CrowdInfoByLocation(LIBRARY);
-        //System.out.println();
     }
 
     public int checkUsernameExists(String username) throws InterruptedException, ExecutionException {
@@ -95,19 +84,6 @@ public final class DBHandler {
         return 200;
     }
     
-    //Upload to Locations DIRECTLY NOT PATH CONTROL!!!
-    //!!!!!!!!!!!!!!!
-    public void archivedUploadCrowdInfo() throws InterruptedException, ExecutionException {
-        Map<String, Object> newData = new HashMap<>();
-        newData.put("crowdedness", 5);
-        newData.put("datetime", Timestamp.now());
-        ApiFuture<WriteResult> arrayUnion =
-            db.collection("locations")
-                .document("library")
-                .update("crowd-infos", FieldValue.arrayUnion(newData));
-        System.out.println("Update time : " + arrayUnion.get());
-    }
-    
     public void uploadCrowdInfoByLocation(String loc, int crowdedness) throws InterruptedException, ExecutionException {
         // Add document data with auto-generated id.
         Map<String, Object> newData = new HashMap<>();
@@ -116,17 +92,6 @@ public final class DBHandler {
         ApiFuture<DocumentReference> addedDocRef = 
             db.collection("locations").document(loc).collection("crowd-infos").add(newData);
         System.out.println("Added document with ID: " + addedDocRef.get().getId());
-    }
-
-    //void => return List TO BE IMPLEMENTED
-    //TESTING METHOD
-    public void archivedGetCrowdInfoByLocation(String loc) throws InterruptedException, ExecutionException {  
-        ApiFuture<QuerySnapshot> future = 
-            db.collection("locations").document(loc).collection("crowd-infos").get();
-        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        for (QueryDocumentSnapshot document : documents) {
-            System.out.println(document.getId() + " => " + document.toObject(CrowdInfo.class));
-        }
     }
 
     public List<Map<String,Object>> getR5CrowdInfoByLocationFromDB(String loc) throws InterruptedException, ExecutionException {
