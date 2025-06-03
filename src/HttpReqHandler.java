@@ -61,7 +61,6 @@ public class HttpReqHandler {
                     ctx.status(status);
                 }
             } catch (Exception e) {
-                //ctx.result( message + "\nUpload FAILED.");
                 ctx.status(500);
             }
         });
@@ -72,7 +71,6 @@ public class HttpReqHandler {
             System.out.print(message);
             switch (requestLoc) {
                 case "library":
-                    //ctx.result(message + MyController.getR5LibraryCrowdInfos() + '\n');
                     ctx.json(MyController.getR5LibraryCrowdInfos());
                     break;
                 case "chi-wah":
